@@ -1,0 +1,32 @@
+.cat-img {
+  width: 500px;
+}
+
+.cat-div {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  justify-content: center;
+  height: 500px;
+  margin-top: 15vh;
+}
+
+.cat-name {
+  font-size: 30px;
+  position: absolute;
+  left: 25vw;
+}
+
+button {
+  position: absolute;
+  bottom: 10vh;
+  left: 47.5vw;
+  width: 100px;
+  height: 30px;
+}
+
+.loading {
+  position: absolute;
+  top: 33vh;
+  font-size: 100px;
+}

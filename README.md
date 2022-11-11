@@ -1,46 +1,25 @@
-# Getting Started with Create React App
+# Random Cat API
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Description
 
-## Available Scripts
+This project is my first ever attempt at TypeScript. After a relatively short TypeScript lecture, I spent 2 days pouring over docs and StackOverflow, and tested everything I was reading and seeing in a ts-node environment. If memory serves, I even discovered some TS array properties that weren't clearly documented (I may revisit that to see if I can make a contribution to said docs).
 
-In the project directory, you can run:
+The app itself is very simple, taking in the response from an API call that returns a random cat image and displaying that image. There is a button that displays the next cat.
 
-### `npm start`
+I also used [Mockaroo](https://www.mockaroo.com/) to generate a list of random names as a JSON file, pulled in that file as an array, then generate a random number to use as an index and assign it to each cat displayed.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+There were two issues that I ran into while writing this app.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- React-TypeScript Props
 
-### `npm test`
+Passing props to a React component was tricky as a first time exercise in TypeScript. What I ended up choosing to do was to declare a state variable called `catProps`, then pass that state variable down to the child component. In hindsight, I believe I have two other options. I could either create a type/interface for the `catProps`, then pass that down, or I could extract the state into context, and use a custom hook to retrieve it. The second option feels too contrived for this small a project.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Funky useEffects
 
-### `npm run build`
+I was having issues with my `useEffect` running twice. I know that this is intended react functionality in a development environment, however, it was happening even when I ran a production build. I went through many iterations of useEffect syntax and general code refactoring before I finally landed on a solution. I simply added a loading state, and a check at the start of the useEffect:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    if (!loading) return;
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+This check at the start of the useEffect will eject you from that hook if the loading state is false.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Adding this loading state had the added benefit of allowing me to easily fetch a new cat, but putting loading into the dependency array of the useEffect, then simply toggling loading on button click.
